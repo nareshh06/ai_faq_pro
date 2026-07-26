@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ.ai — Intelligent FAQ Assistant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">✦</div>
+      <div class="brand-text">
+        <h1>FAQ.ai</h1>
+        <span>Intelligent Assistant</span>
+      </div>
+    </div>
+
+    <nav class="side-nav">
+      <button class="side-btn active" data-tab="chat">
+        <span class="icon">💬</span> Ask a Question
+      </button>
+      <button class="side-btn" data-tab="admin">
+        <span class="icon">🗂️</span> Knowledge Base
+      </button>
+      <button class="side-btn" data-tab="analytics">
+        <span class="icon">📊</span> Analytics
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div id="adminStatus" class="admin-status" style="display:none;">
+        <span id="adminUsernameLabel"></span>
+        <button id="logoutBtn" class="logout-btn">Log out</button>
+      </div>
+      <button id="themeToggle" class="theme-toggle" title="Toggle dark mode">🌙 Dark Mode</button>
+      <p class="footer-note">College Mini Project<br>HTML · CSS · JS · PHP · MySQL · AI</p>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="main">
+
+    <!-- ============ CHAT TAB ============ -->
+    <section id="chat" class="tab-section active">
+      <header class="section-header">
+        <div>
+          <h2>Ask me anything</h2>
+          <p>Checks the knowledge base first, then asks AI if needed.</p>
+        </div>
+        <button id="clearChatBtn" class="ghost-btn">Clear Chat</button>
+      </header>
+
+      <div class="chat-wrapper">
+        <div id="chatWindow" class="chat-window">
+          <div class="message bot">
+            <div class="avatar bot-avatar">✦</div>
+            <div class="bubble-wrap">
+              <div class="bubble">👋 Hi! I'm your AI-powered FAQ assistant. Ask me a question — I'll check our knowledge base first, and use AI to help if I don't already know the answer.</div>
+            </div>
+          </div>
+        </div>
+
+        <form id="questionForm" class="question-form">
+          <input type="text" id="userQuestion" placeholder="Type your question here..." autocomplete="off" required>
+          <button type="submit" class="send-btn">
+            <span>Send</span>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============ ADMIN / KNOWLEDGE BASE TAB ============ -->
+    <section id="admin" class="tab-section">
+      <header class="section-header">
+        <div>
+          <h2>Knowledge Base</h2>
+          <p>Manage FAQs — add new ones manually or review what the AI has learned.</p>
+        </div>
+      </header>
+
+      <!-- Shown when not logged in -->
+      <div id="adminLoginGate-admin" class="login-gate">
+        <div class="card login-card">
+          <h3>🔒 Admin Login Required</h3>
+          <p class="subtitle">Log in to manage the knowledge base.</p>
+          <form class="login-form" data-target="admin">
+            <input type="text" class="login-username" placeholder="Username" required>
+            <input type="password" class="login-password" placeholder="Password" required>
+            <button type="submit" class="primary-btn">Log In</button>
+          </form>
+          <div class="login-msg form-msg"></div>
+          <p class="setup-hint">First time? Visit <code>php/create_admin.php</code> once to create an admin account.</p>
+        </div>
+      </div>
+
+      <!-- Shown when logged in -->
+      <div id="adminContent-admin" class="grid-2" style="display:none;">
+        <div class="card">
+          <h3>Add New FAQ</h3>
+          <form id="addFaqForm" class="add-faq-form">
+            <label>Question</label>
+            <input type="text" id="faqQuestion" placeholder="e.g. How do I upgrade my plan?" required>
+
+            <label>Answer</label>
+            <textarea id="faqAnswer" rows="3" placeholder="Write the full answer here..." required></textarea>
+
+            <label>Keywords <span>(comma separated)</span></label>
+            <input type="text" id="faqKeywords" placeholder="e.g. upgrade, plan, premium" required>
+
+            <label>Category</label>
+            <input type="text" id="faqCategory" placeholder="e.g. Billing" value="General">
+
+            <button type="submit" class="primary-btn">+ Add FAQ</button>
+          </form>
+          <div id="addFaqMsg" class="form-msg"></div>
+        </div>
+
+        <div class="card">
+          <h3>Existing FAQs <span id="faqCount" class="count-badge">0</span></h3>
+          <div id="faqList" class="faq-list">
+            <p class="loading-text">Loading FAQs...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ANALYTICS TAB ============ -->
+    <section id="analytics" class="tab-section">
+      <header class="section-header">
+        <div>
+          <h2>Analytics</h2>
+          <p>See how your FAQ assistant is performing.</p>
+        </div>
+      </header>
+
+      <!-- Shown when not logged in -->
+      <div id="adminLoginGate-analytics" class="login-gate">
+        <div class="card login-card">
+          <h3>🔒 Admin Login Required</h3>
+          <p class="subtitle">Log in to view analytics.</p>
+          <form class="login-form" data-target="analytics">
+            <input type="text" class="login-username" placeholder="Username" required>
+            <input type="password" class="login-password" placeholder="Password" required>
+            <button type="submit" class="primary-btn">Log In</button>
+          </form>
+          <div class="login-msg form-msg"></div>
+          <p class="setup-hint">First time? Visit <code>php/create_admin.php</code> once to create an admin account.</p>
+        </div>
+      </div>
+
+      <!-- Shown when logged in -->
+      <div id="adminContent-analytics" style="display:none;">
+        <div class="stat-grid">
+          <div class="stat-card">
+            <span class="stat-label">Total FAQs</span>
+            <span class="stat-value" id="statTotalFaqs">—</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Total Questions Asked</span>
+            <span class="stat-value" id="statTotalQueries">—</span>
+          </div>
+          <div class="stat-card accent-green">
+            <span class="stat-label">Answered from Knowledge Base</span>
+            <span class="stat-value" id="statDbAnswered">—</span>
+          </div>
+          <div class="stat-card accent-purple">
+            <span class="stat-label">Answered by AI</span>
+            <span class="stat-value" id="statAiAnswered">—</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Recent Questions</h3>
+          <div id="recentQueries" class="recent-list">
+            <p class="loading-text">Loading...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
